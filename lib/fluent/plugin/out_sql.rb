@@ -59,9 +59,13 @@ module Fluent
         @mapping = parse_column_mapping(@column_mapping)
         @format_proc = Proc.new { |record|
           new_record = {}
-          @mapping.each { |k, c|
-            new_record[c] = record[k]
-          }
+	  if @column_mapping == 'ALL'
+	  	new_record = record
+	  else
+          	@mapping.each { |k, c|
+            	new_record[c] = record[k]
+         	}	
+	  end
           new_record
         }
       end
